@@ -6,7 +6,7 @@ def print_stats(size, status_codes):
     """Print accumulated metrics."""
     print("File size: {}".format(size))
     for key in sorted(status_codes):
-	print("{}: {}".format(key, status_codes[key]))
+        print("{}: {}".format(key, status_codes[key]))
 
 
 if __name__ == "__main__":
@@ -18,31 +18,31 @@ if __name__ == "__main__":
     count = 0
 
     try:
-    	for line in sys.stdin:
-	    if count == 10:
-	    	print_stats(size, status_codes)
-		count = 1
-	    else:
-	    	count += 1
+        for line in sys.stdin:
+            if count == 10:
+                print_stats(size, status_codes)
+                count = 1
+            else:
+                count += 1
 
-	    line = line.split()
+            line = line.split()
 
             try:
-	    	size += int(line[-1])
+                size += int(line[-1])
             except (IndexError, ValueError):
-		pass
+                pass
 
             try:
-	    	if line[-2] in valid_codes:
+                if line[-2] in valid_codes:
                     if status_codes.get(line[-2], -1) == -1:
-		    	status_codes[line[-2]] = 1
+                        status_codes[line[-2]] = 1
                     else:
-		    	status_codes[line[-2]] += 1
+                        status_codes[line[-2]] += 1
             except IndexError:
-	    	pass
+                pass
 
-	print_stats(size, status_codes)
+        print_stats(size, status_codes)
 
     except KeyboardInterrupt:
-    	print_stats(size, status_codes)
-	raise
+        print_stats(size, status_codes)
+        raise
